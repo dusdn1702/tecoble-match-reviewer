@@ -9,5 +9,4 @@ public class ReviewerApplication {
     public static void main(String[] args) {
         SpringApplication.run(ReviewerApplication.class, args);
     }
-
 }
