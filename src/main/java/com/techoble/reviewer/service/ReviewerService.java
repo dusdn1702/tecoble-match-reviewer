@@ -1,6 +1,7 @@
 package com.techoble.reviewer.service;
 
 import com.techoble.reviewer.dto.CrewsDto;
+import com.techoble.reviewer.exception.DuplicateCrewException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -8,13 +9,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReviewerService {
 
-    public static List<String> crews = new ArrayList<>();
+    protected static List<String> crews = new ArrayList<>();
 
     public void add(final String name) {
-        if (crews.contains(name)) {
-            throw new IllegalArgumentException("이미 존재하는 크루입니다.");
-        }
+        validateContains(name);
         crews.add(name);
+    }
+
+    private void validateContains(String name) {
+        if (crews.contains(name)) {
+            throw new DuplicateCrewException();
+        }
     }
 
     public CrewsDto findCrews() {
