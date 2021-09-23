@@ -1,6 +1,6 @@
 package com.techoble.reviewer.service;
 
-import com.techoble.reviewer.domain.CrewsDto;
+import com.techoble.reviewer.dto.CrewsDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +9,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.techoble.reviewer.service.MatchingService.crews;
+import static com.techoble.reviewer.service.ReviewerService.crews;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
-class MatchingServiceTest {
+class ReviewerServiceTest {
     private static final String SALLY = "sally";
 
     @Autowired
-    private MatchingService matchingService;
+    private ReviewerService reviewerService;
 
     @BeforeEach
     void setUp() {
@@ -27,14 +27,14 @@ class MatchingServiceTest {
 
     @Test
     void add() {
-        matchingService.add(SALLY);
+        reviewerService.add(SALLY);
         assertThat(crews).containsExactly(SALLY);
     }
 
     @Test
     void addException() {
-        matchingService.add(SALLY);
-        assertThatThrownBy(() -> matchingService.add(SALLY))
+        reviewerService.add(SALLY);
+        assertThatThrownBy(() -> reviewerService.add(SALLY))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -44,7 +44,7 @@ class MatchingServiceTest {
         crews.add(SALLY);
 
         CrewsDto crewsDto = new CrewsDto(List.of(SALLY));
-        assertThat(matchingService.findCrews()).usingRecursiveComparison()
+        assertThat(reviewerService.findCrews()).usingRecursiveComparison()
                 .isEqualTo(crewsDto);
     }
 }

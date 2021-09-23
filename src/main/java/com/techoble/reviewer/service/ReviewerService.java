@@ -1,13 +1,13 @@
 package com.techoble.reviewer.service;
 
-import com.techoble.reviewer.domain.CrewsDto;
-import org.springframework.stereotype.Service;
-
+import com.techoble.reviewer.dto.CrewsDto;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
-public class MatchingService {
+public class ReviewerService {
+
     public static List<String> crews = new ArrayList<>();
 
     public void add(final String name) {
