@@ -29,9 +29,9 @@ public class ReviewerService {
         return new CrewsDto(crews);
     }
 
-    public void match() {
+    public void shuffle() {
         validateSize();
-        shuffle();
+        Collections.shuffle(crews);
     }
 
     private void validateSize() {
@@ -40,15 +40,11 @@ public class ReviewerService {
         }
     }
 
-    private void shuffle() {
-        Collections.shuffle(crews);
-    }
-
     public ReviewersDto findReviewers() {
-        return new ReviewersDto(matchReviewers());
+        return new ReviewersDto(match());
     }
 
-    private List<String> matchReviewers() {
+    private List<String> match() {
         List<String> reviewers = new ArrayList<>();
 
         for (int i = 0; i < crews.size(); i++) {

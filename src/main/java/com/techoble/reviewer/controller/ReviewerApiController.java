@@ -45,8 +45,8 @@ public class ReviewerApiController {
     }
 
     @PostMapping("/reviewers")
-    public ResponseEntity<ReviewersDto> match() {
-        reviewerService.match();
+    public ResponseEntity<ReviewersDto> shuffle() {
+        reviewerService.shuffle();
         return ResponseEntity.ok().build();
     }
 }
