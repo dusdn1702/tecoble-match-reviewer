@@ -31,19 +31,10 @@ public class ReviewerApiController {
         reviewerService.add(name, part);
         return ResponseEntity.ok().build();
     }
-//
-//    @GetMapping("/reviewers")
-//    public ResponseEntity<ReviewersDto> findReviewers() {
-//        ReviewersDto reviewers = reviewerService.findReviewers();
-//        if (reviewers.getReviewers().size() < 3) {
-//            return ResponseEntity.noContent().build();
-//        }
-//        return ResponseEntity.ok(reviewers);
-//    }
-//
-//    @PostMapping("/reviewers")
-//    public ResponseEntity<ReviewersDto> shuffle() {
-//        reviewerService.shuffle();
-//        return ResponseEntity.ok().build();
-//    }
+
+    @PostMapping("/reviewers")
+    public ResponseEntity<ReviewersDto> shuffle() {
+        ReviewersDto reviewers = reviewerService.findReviewers();
+        return ResponseEntity.ok(reviewers);
+    }
 }
