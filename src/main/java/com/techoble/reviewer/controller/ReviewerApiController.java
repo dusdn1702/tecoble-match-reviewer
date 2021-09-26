@@ -32,7 +32,7 @@ public class ReviewerApiController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/reviewers")
+    @GetMapping("/reviewers")
     public ResponseEntity<ReviewersDto> shuffle() {
         ReviewersDto reviewers = reviewerService.findReviewers();
         return ResponseEntity.ok(reviewers);

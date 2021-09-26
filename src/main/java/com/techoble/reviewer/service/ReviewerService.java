@@ -88,14 +88,14 @@ public class ReviewerService {
     private void matchPart(List<Crew> partCrews, List<String> reviewers) {
         for (int i = 0; i < partCrews.size(); i++) {
             if (isBeforeLast(i, partCrews.size())) {
-                reviewers.add(partCrews.get(i).getName() + "리뷰어: " + partCrews.get(i + 1).getName() + ", " + partCrews.get(0).getName());
+                reviewers.add(partCrews.get(i).getName() + "리뷰어: " + partCrews.get(i + 1).getName() + " " + partCrews.get(0).getName());
                 continue;
             }
             if (isLast(i, partCrews.size())) {
-                reviewers.add(partCrews.get(i).getName() + "리뷰어: " + partCrews.get(0).getName() + ", " + partCrews.get(1).getName());
+                reviewers.add(partCrews.get(i).getName() + "리뷰어: " + partCrews.get(0).getName() + " " + partCrews.get(1).getName());
                 break;
             }
-            reviewers.add(partCrews.get(i).getName() + "리뷰어: " + partCrews.get(i + 1).getName() + ", " + partCrews.get(i + 2).getName());
+            reviewers.add(partCrews.get(i).getName() + "리뷰어: " + partCrews.get(i + 1).getName() + " " + partCrews.get(i + 2).getName());
         }
     }
 
