@@ -1,16 +1,26 @@
 package com.techoble.reviewer.dto;
 
+import com.techoble.reviewer.domain.Crew;
+
 import java.util.List;
 
 public class CrewsDto {
+    private List<Crew> backend;
+    private List<Crew> frontend;
 
-    private final List<String> crews;
-
-    public CrewsDto(List<String> crews) {
-        this.crews = crews;
+    public CrewsDto() {
     }
 
-    public List<String> getCrews() {
-        return crews;
+    public CrewsDto(List<Crew> backend, List<Crew> frontend) {
+        this.backend = backend;
+        this.frontend = frontend;
+    }
+
+    public List<Crew> getBackend() {
+        return backend;
+    }
+
+    public List<Crew> getFrontend() {
+        return frontend;
     }
 }

@@ -2,6 +2,8 @@ package com.techoble.reviewer.service;
 
 import com.techoble.reviewer.domain.Crew;
 import com.techoble.reviewer.domain.CrewRepository;
+import com.techoble.reviewer.domain.Part;
+import com.techoble.reviewer.dto.CrewsDto;
 import com.techoble.reviewer.exception.DuplicateCrewException;
 import com.techoble.reviewer.exception.IllegalPartException;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 import static com.techoble.reviewer.domain.Part.BACKEND;
@@ -25,12 +28,14 @@ class ReviewerServiceTest {
     private static final String DANI = "다니";
     private static final String YB = "와이비";
     private static final String WILDER = "와일더";
+    private static final String BACKEND = "BACKEND";
 
     @Autowired
     private ReviewerService reviewerService;
 
     @Autowired
     private CrewRepository crews;
+    private static final Crew CREW_SALLY = new Crew(SALLY, Part.BACKEND);
 
     @BeforeEach
     void setUp() {
@@ -39,12 +44,11 @@ class ReviewerServiceTest {
 
     @Test
     void add() {
-        Crew crew = new Crew(SALLY, BACKEND);
-        reviewerService.add(SALLY, "BACKEND");
+        reviewerService.add(SALLY, BACKEND);
 
         assertThat(crews.findAll()).usingRecursiveComparison()
                 .ignoringFields("id")
-                .isEqualTo(List.of(crew));
+                .isEqualTo(List.of(CREW_SALLY));
     }
 
     @Test
@@ -63,19 +67,20 @@ class ReviewerServiceTest {
                 .isInstanceOf(IllegalPartException.class);
     }
 
-//    @Test
-//    void findCrews() {
-//        assertThat(crews.size()).isZero();
-//        crews.add(SALLY);
-//
-//        CrewsDto actual = reviewerService.findCrews();
-//        CrewsDto expected = new CrewsDto(List.of(SALLY));
-//
-//        assertThat(actual)
-//                .usingRecursiveComparison()
-//                .isEqualTo(expected);
-//    }
-//
+    @Test
+    void findCrews() {
+        assertThat(reviewerService.findCrews()).usingRecursiveComparison()
+                .isEqualTo(new CrewsDto(Collections.emptyList(), Collections.emptyList()));
+
+
+        reviewerService.add(SALLY, "BACKEND");
+
+        CrewsDto actual = reviewerService.findCrews();
+
+        assertThat(actual.getBackend().size()).isEqualTo(1);
+        assertThat(actual.getFrontend().size()).isZero();
+    }
+
 //    @Test
 //    void shuffleException() {
 //        // given

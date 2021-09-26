@@ -15,6 +15,9 @@ import com.techoble.reviewer.exception.IllegalPartException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.techoble.reviewer.domain.Part.BACKEND;
+import static com.techoble.reviewer.domain.Part.FRONTEND;
+
 @Service
 @Transactional
 public class ReviewerService {
@@ -46,10 +49,12 @@ public class ReviewerService {
         }
     }
 
-//    public CrewsDto findCrews() {
-//        return new CrewsDto(crews);
-//    }
-//
+    public CrewsDto findCrews() {
+        List<Crew> backend = crews.findAllByPart(BACKEND);
+        List<Crew> frontend = crews.findAllByPart(FRONTEND);
+        return new CrewsDto(backend, frontend);
+    }
+
 //    public void shuffle() {
 //        validateSize();
 //        Collections.shuffle(crews);

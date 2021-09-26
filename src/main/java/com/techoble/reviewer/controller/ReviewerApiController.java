@@ -20,14 +20,11 @@ public class ReviewerApiController {
         this.reviewerService = reviewerService;
     }
 
-//    @GetMapping("/crews")
-//    public ResponseEntity<CrewsDto> findCrews() {
-//        CrewsDto crews = reviewerService.findCrews();
-//        if (crews.getCrews().isEmpty()) {
-//            return ResponseEntity.noContent().build();
-//        }
-//        return ResponseEntity.ok(crews);
-//    }
+    @GetMapping("/crews")
+    public ResponseEntity<CrewsDto> findCrews() {
+        CrewsDto crews = reviewerService.findCrews();
+        return ResponseEntity.ok(crews);
+    }
 
     @PostMapping("/crews")
     public ResponseEntity<Void> register(@RequestParam String name, @RequestParam String part) {
