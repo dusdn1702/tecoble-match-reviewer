@@ -66,10 +66,12 @@ document.querySelector("#findReviewers").addEventListener("click", function () {
             const reviewerResults = document.querySelector(".reviewers");
             if (data.status === 200) {
                 data.json().then(res => {
+                    reviewerResults.innerHTML += '🪐 백엔드<br/><br/>';
                     for (let i = 0; i < res.backendReviewers.length; i++) {
                         reviewerResults.innerHTML += res.backendReviewers[i] + '<br/>';
                     }
-                    reviewerResults.innerHTML += '<br/><hr/><br/>';
+                    reviewerResults.innerHTML += '<br/><br/>';
+                    reviewerResults.innerHTML += '🪐 프론트엔드<br/><br/>';
                     for (let i = 0; i < res.frontendReviewers.length; i++) {
                         reviewerResults.innerHTML += res.frontendReviewers[i] + '<br/>';
                     }
