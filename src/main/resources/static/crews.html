@@ -8,47 +8,48 @@
     <link rel="stylesheet" href="./crews.css">
 </head>
 <body>
-<div class="card">
-    <h3 class="crewsHead mx-2 my-2">
-        등록 현황
-    </h3>
-    <hr/>
-    <div class="crews mx-2 my-2">
+    <div>
+        <br/>
+        <h3 class="crewsHead mx-2 my-2">
+            등록 현황
+        </h3>
+        <hr/>
+        <div class="crews mx-2 my-2">
+        </div>
+        <form class="row g-3 mx-2 my-2">
+            <div class="col-auto">
+                <label for="name" class="form-label">이름</label>
+            </div>
+            <div class="col-auto">
+                <input class="form-control" id="name" style="width: 188px">
+            </div>
+            <div class="col-auto">
+                <label for="part" class="form-label">파트</label>
+            </div>
+            <div class="col-auto">
+                <select class="form-select" aria-label="파트선택" id="part">
+                    <option value="BACKEND">백엔드</option>
+                    <option value="FRONTEND">프론트엔드</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="button" id="saveCrew" class="btn btn-primary">등록하기</button>
+            </div>
+            <div class="col-auto">
+                <button type="button" id="deleteAllCrew" class="btn btn-secondary">초기화</button>
+            </div>
+        </form>
+        <br/><br/>
+        <h3 class="mx-2 my-2">
+            매칭 결과
+        </h3>
+        <hr/>
+        <div class="reviewers mx-2 my-2">
+        </div>
+        <div class="col-auto">
+            &nbsp;<button type="button" class="btn btn-primary" id="findReviewers">매칭하기</button>
+        </div>
     </div>
-    <form class="row g-3 mx-2 my-2">
-        <div class="col-auto">
-            <label for="name" class="form-label">이름</label>
-        </div>
-        <div class="col-auto">
-            <input class="form-control" id="name" style="width: 188px">
-        </div>
-        <div class="col-auto">
-            <label for="part" class="form-label">파트</label>
-        </div>
-        <div class="col-auto">
-            <select class="form-select" aria-label="파트선택" id="part">
-                <option value="BACKEND">백엔드</option>
-                <option value="FRONTEND">프론트엔드</option>
-            </select>
-        </div>
-        <div class="col-auto">
-            <button type="button" id="saveCrew" class="btn btn-primary">등록하기</button>
-        </div>
-        <div class="col-auto">
-            <button type="button" id="deleteAllCrew" class="btn btn-secondary">초기화</button>
-        </div>
-    </form>
-    <br/><br/>
-    <h3 class="mx-2 my-2">
-        매칭 결과
-    </h3>
-    <hr/>
-    <div class="reviewers mx-2 my-2">
-    </div>
-    <div class="col-auto">
-        <button type="button" class="btn btn-primary" id="findReviewers">매칭하기</button>
-    </div>
-</div>
 </body>
 <script src="./crews.js"></script>
 </html>

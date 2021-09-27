@@ -2,9 +2,13 @@ package com.techoble.reviewer.exception;
 
 public class IllegalPartException extends ReviewerException {
 
-    private static final String MESSAGE = "불가능한 파트입니다. BACKEND / FRONTEND로 입력해주세요.";
+    private static final String MESSAGE = "백엔드 또는 프론트엔드만 가능합니다.";
 
     public IllegalPartException() {
-        super(MESSAGE);
+        this(MESSAGE);
+    }
+
+    private IllegalPartException(String message) {
+        super(message);
     }
 }
