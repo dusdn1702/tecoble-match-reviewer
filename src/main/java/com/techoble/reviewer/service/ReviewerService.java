@@ -45,6 +45,11 @@ public class ReviewerService {
         crewRepository.save(crew);
     }
 
+    @Transactional
+    public void deleteAllCrews() {
+        crewRepository.deleteAll();
+    }
+
     private void validate(String name, String part) {
         validateName(name);
         validatePart(part);

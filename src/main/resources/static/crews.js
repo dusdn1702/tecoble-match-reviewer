@@ -83,3 +83,18 @@ document.querySelector("#findReviewers").addEventListener("click", function () {
         }
     );
 });
+
+document.querySelector("#deleteAllCrew").addEventListener("click", function () {
+    fetch(crewsApi, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then(function (response) {
+        if (response.status === 200) {
+            location.reload();
+        } else {
+            alert('등록에 문제가 있습니다.');
+        }
+    });
+});
