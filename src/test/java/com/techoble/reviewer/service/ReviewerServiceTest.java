@@ -8,7 +8,6 @@ import com.techoble.reviewer.domain.CrewRepository;
 import com.techoble.reviewer.domain.Part;
 import com.techoble.reviewer.dto.CrewsDto;
 import com.techoble.reviewer.dto.ReviewersDto;
-import com.techoble.reviewer.exception.CannotMatchException;
 import com.techoble.reviewer.exception.DuplicateCrewException;
 import com.techoble.reviewer.exception.IllegalPartException;
 import java.util.Collections;
@@ -27,7 +26,13 @@ class ReviewerServiceTest {
     private static final String DANI = "다니";
     private static final String YB = "와이비";
     private static final String WILDER = "와일더";
+    private static final String MICKEY = "미키";
+    private static final String KYLE = "카일";
+    private static final String JUMO = "주모";
+
     private static final String BACKEND = "BACKEND";
+    private static final String FRONTEND = "FRONTEND";
+
     private static final Crew SALLY_BACKEND = new Crew(SALLY, Part.BACKEND);
 
     @Autowired
@@ -82,51 +87,22 @@ class ReviewerServiceTest {
     }
 
     @Test
-    void shuffleException() {
-        // given
-        reviewerService.saveCrew(SALLY, BACKEND);
-        reviewerService.saveCrew(DANI, BACKEND);
-
-        // when, then
-        assertThatThrownBy(() -> reviewerService.findReviewers())
-            .isInstanceOf(CannotMatchException.class)
-            .hasMessage("리뷰어 매칭을 위한 최소 인원은 3명입니다.");
-    }
-
-    @Test
     void findReviewers() {
         // given
-        List<Crew> backendCrews = List.of(
-            new Crew(SALLY, Part.BACKEND),
-            new Crew(DANI, Part.BACKEND),
-            new Crew(YB, Part.BACKEND),
-            new Crew(WILDER, Part.BACKEND)
-        );
-
         reviewerService.saveCrew(SALLY, BACKEND);
         reviewerService.saveCrew(DANI, BACKEND);
         reviewerService.saveCrew(YB, BACKEND);
         reviewerService.saveCrew(WILDER, BACKEND);
 
-        ReviewersDto expected = new ReviewersDto(
-            List.of(
-                "🪐 백엔드<br/>",
-                "샐리 리뷰어 - 다니, 와이비",
-                "다니 리뷰어 - 와이비, 와일더",
-                "와이비 리뷰어 - 와일더, 샐리",
-                "와일더 리뷰어 - 샐리, 다니"
-            ),
-            List.of(
-                "🪐 프론트엔드<br/>"
-            )
-        );
+        reviewerService.saveCrew(MICKEY, FRONTEND);
+        reviewerService.saveCrew(KYLE, FRONTEND);
+        reviewerService.saveCrew(JUMO, FRONTEND);
 
         // when
-        ReviewersDto actual = reviewerService.matchReviewers(backendCrews, Collections.emptyList());
+        ReviewersDto actual = reviewerService.findReviewers();
 
         // then
-        assertThat(actual)
-            .usingRecursiveComparison()
-            .isEqualTo(expected);
+        assertThat(actual.getBackendReviewers()).hasSize(4);
+        assertThat(actual.getFrontendReviewers()).hasSize(3);
     }
 }
