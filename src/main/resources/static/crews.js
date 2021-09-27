@@ -39,7 +39,7 @@ function getCrews() {
 
 document.querySelector("#saveCrew").addEventListener("click", function () {
     let name = document.querySelector("#name").value;
-    let part = document.querySelector("#part").value;
+    let part = document.querySelector(".form-select").value;
 
     fetch(crewsApi + '?name=' + name + '&part=' + part, {
         method: 'POST',
@@ -50,7 +50,7 @@ document.querySelector("#saveCrew").addEventListener("click", function () {
         if (response.status === 200) {
             location.reload();
         } else {
-            alert('이미 존재하는 크루 또는 불가능한 파트입니다.');
+            alert('등록에 문제가 있습니다.');
         }
     });
 });
@@ -62,8 +62,8 @@ document.querySelector("#findReviewers").addEventListener("click", function () {
             'Content-Type': 'application/json',
         }
     }).then(function (data) {
-        console.log(data);
             const reviewerResults = document.querySelector(".reviewers");
+            if(reviewerResults.innerHTML.length > 0) reviewerResults.innerHTML = "";
             if (data.status === 200) {
                 data.json().then(res => {
                     reviewerResults.innerHTML += '🪐 백엔드<br/><br/>';
