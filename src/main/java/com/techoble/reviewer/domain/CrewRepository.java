@@ -10,4 +10,6 @@ public interface CrewRepository extends JpaRepository<Crew, Long> {
     boolean existsByName(String name);
 
     List<Crew> findAllByPart(Part part);
+
+    void deleteByName(String name);
 }

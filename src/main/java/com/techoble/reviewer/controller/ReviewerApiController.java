@@ -34,6 +34,12 @@ public class ReviewerApiController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/crews/{name}")
+    public ResponseEntity<Void> delete(@PathVariable String name) {
+        reviewerService.deleteCrew(name);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/reviewers")
     public ResponseEntity<ReviewersDto> findReviewers() {
         ReviewersDto reviewers = reviewerService.findReviewers();
