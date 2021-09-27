@@ -31,7 +31,7 @@ function getCrews() {
                     ).join(" ");
                 })
             } else {
-                crewNames.innerHTML += '등록 결과가 없습니다.';
+                crewNames.innerHTML += '크루를 등록해주세요.';
             }
         }
     );
@@ -47,7 +47,7 @@ function deleteCrew(crew) {
         if (response.status === 200) {
             location.reload();
         } else {
-            alert('삭제에 문제가 있습니다.');
+            alert('삭제에 오류가 발생했습니다.');
         }
     });
 }
@@ -65,7 +65,7 @@ document.querySelector("#saveCrew").addEventListener("click", function () {
         if (response.status === 200) {
             location.reload();
         } else {
-            alert('등록에 문제가 있습니다.');
+            alert('등록에 오류가 발생했습니다.');
         }
     });
 });
@@ -93,7 +93,7 @@ document.querySelector("#findReviewers").addEventListener("click", function () {
                     reviewerResults.innerHTML += '<br/>';
                 })
             } else {
-                alert('리뷰어 매칭을 위한 최소 인원은 3명입니다.');
+                alert('매칭에 오류가 발생했습니다. 최소 3명을 등록해주세요.');
             }
         }
     );
@@ -109,7 +109,7 @@ document.querySelector("#deleteAllCrew").addEventListener("click", function () {
         if (response.status === 200) {
             location.reload();
         } else {
-            alert('전체 삭제에 문제가 있습니다.');
+            alert('초기화에 오류가 발생했습니다.');
         }
     });
 });
