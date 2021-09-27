@@ -3,10 +3,11 @@ package com.techoble.reviewer.dto;
 import java.util.List;
 
 public class ReviewersDto {
+
     private List<String> backendReviewers;
     private List<String> frontendReviewers;
 
-    public ReviewersDto() {
+    private ReviewersDto() {
     }
 
     public ReviewersDto(List<String> backendReviewers, List<String> frontendReviewers) {

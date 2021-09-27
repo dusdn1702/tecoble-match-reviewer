@@ -11,7 +11,6 @@ function CrewsPage() {
     reviewersApi = window.location.origin + "/api/reviewers";
 
     getCrews();
-    // getReviewers();
 }
 
 function getCrews() {
@@ -21,13 +20,14 @@ function getCrews() {
             const crewNames = document.querySelector(".crews");
             if (data.status === 200) {
                 data.json().then(res => {
-                    crewNames.innerHTML += '백엔드 크루' + ': ';
-                    for (let i = 0; i < res.backend.length; i++) {
-                        crewNames.innerHTML += res.backend[i] + ' ';
+                    crewNames.innerHTML += '🖋️ 백엔드 크루 - ';
+                    for (let i = 0; i < res.backendCrews.length; i++) {
+                        crewNames.innerHTML += res.backendCrews[i] + ' ';
                     }
-                    crewNames.innerHTML += '<br>' + '프론트엔드 크루' + ': ';
-                    for (let i = 0; i < res.frontend.length; i++) {
-                        crewNames.innerHTML += res.frontend[i] + ' ';
+                    crewNames.innerHTML += '<br/>';
+                    crewNames.innerHTML += '🖌 프론트엔드 크루 - ';
+                    for (let i = 0; i < res.frontendCrews.length; i++) {
+                        crewNames.innerHTML += res.frontendCrews[i] + ' ';
                     }
                 })
             } else {
@@ -37,9 +37,9 @@ function getCrews() {
     );
 }
 
-document.querySelector("#register").addEventListener("click", function () {
-    let name = document.querySelector("#inputName").value;
-    let part = document.querySelector("#inputPart").value;
+document.querySelector("#saveCrew").addEventListener("click", function () {
+    let name = document.querySelector("#name").value;
+    let part = document.querySelector("#part").value;
 
     fetch(crewsApi + '?name=' + name + '&part=' + part, {
         method: 'POST',
@@ -55,7 +55,7 @@ document.querySelector("#register").addEventListener("click", function () {
     });
 });
 
-document.querySelector("#match").addEventListener("click", function () {
+document.querySelector("#findReviewers").addEventListener("click", function () {
     fetch(reviewersApi, {
         method: 'GET',
         headers: {
@@ -69,11 +69,11 @@ document.querySelector("#match").addEventListener("click", function () {
                     for (let i = 0; i < res.backendReviewers.length; i++) {
                         reviewerResults.innerHTML += res.backendReviewers[i] + '<br/>';
                     }
-                    reviewerResults.innerHTML += '<br/>';
+                    reviewerResults.innerHTML += '<br/><hr/><br/>';
                     for (let i = 0; i < res.frontendReviewers.length; i++) {
                         reviewerResults.innerHTML += res.frontendReviewers[i] + '<br/>';
                     }
-
+                    reviewerResults.innerHTML += '<br/>';
                 })
             } else {
                 alert('매칭 도중 오류가 발생했습니다.');

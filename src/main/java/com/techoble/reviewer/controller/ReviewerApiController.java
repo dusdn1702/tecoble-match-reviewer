@@ -27,13 +27,13 @@ public class ReviewerApiController {
     }
 
     @PostMapping("/crews")
-    public ResponseEntity<Void> register(@RequestParam String name, @RequestParam String part) {
-        reviewerService.add(name, part);
+    public ResponseEntity<Void> saveCrew(@RequestParam String name, @RequestParam String part) {
+        reviewerService.saveCrew(name, part);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/reviewers")
-    public ResponseEntity<ReviewersDto> shuffle() {
+    public ResponseEntity<ReviewersDto> findReviewers() {
         ReviewersDto reviewers = reviewerService.findReviewers();
         return ResponseEntity.ok(reviewers);
     }
