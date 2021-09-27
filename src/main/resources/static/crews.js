@@ -50,7 +50,7 @@ document.querySelector("#saveCrew").addEventListener("click", function () {
         if (response.status === 200) {
             location.reload();
         } else {
-            alert('중복된 이름이 존재합니다.');
+            alert('이미 존재하는 크루 또는 불가능한 파트입니다.');
         }
     });
 });
@@ -78,7 +78,7 @@ document.querySelector("#findReviewers").addEventListener("click", function () {
                     reviewerResults.innerHTML += '<br/>';
                 })
             } else {
-                alert('매칭 도중 오류가 발생했습니다.');
+                alert('리뷰어 매칭을 위한 최소 인원은 3명입니다.');
             }
         }
     );

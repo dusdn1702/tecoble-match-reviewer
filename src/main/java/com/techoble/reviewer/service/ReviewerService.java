@@ -11,7 +11,9 @@ import com.techoble.reviewer.dto.CrewsDto;
 import com.techoble.reviewer.dto.ReviewersDto;
 import com.techoble.reviewer.exception.DuplicateCrewException;
 import com.techoble.reviewer.exception.IllegalPartException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,24 +36,31 @@ public class ReviewerService {
 
     @Transactional
     public void saveCrew(final String name, final String part) {
-        validateContains(name);
+        validate(name, part);
 
-        Part findPart = valueOf(part);
+        Part findPart = Part.valueOf(part);
         Crew crew = new Crew(name, findPart);
 
         crewRepository.save(crew);
     }
 
-    private void validateContains(String name) {
+    private void validate(String name, String part) {
+        validateName(name);
+        validatePart(part);
+    }
+
+    private void validateName(String name) {
         if (crewRepository.existsByName(name)) {
             throw new DuplicateCrewException();
         }
     }
 
-    private Part valueOf(String part) {
-        try {
-            return Part.valueOf(part);
-        } catch (IllegalArgumentException e) {
+    private void validatePart(String part) {
+        Optional<Part> findPart = Arrays.stream(Part.values())
+            .filter(value -> value.name().equals(part))
+            .findAny();
+
+        if (findPart.isEmpty()) {
             throw new IllegalPartException();
         }
     }
