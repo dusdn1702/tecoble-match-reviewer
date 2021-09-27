@@ -10,6 +10,7 @@ import com.techoble.reviewer.domain.Part;
 import com.techoble.reviewer.dto.CrewsDto;
 import com.techoble.reviewer.dto.ReviewersDto;
 import com.techoble.reviewer.exception.DuplicateCrewException;
+import com.techoble.reviewer.exception.IllegalNameException;
 import com.techoble.reviewer.exception.IllegalPartException;
 import java.util.Arrays;
 import java.util.List;
@@ -52,6 +53,9 @@ public class ReviewerService {
     private void validateName(String name) {
         if (crewRepository.existsByName(name)) {
             throw new DuplicateCrewException();
+        }
+        if (name.trim().isBlank()){
+            throw new IllegalNameException();
         }
     }
 
