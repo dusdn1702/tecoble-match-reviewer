@@ -64,14 +64,14 @@ class ReviewerServiceTest {
 
         assertThatThrownBy(() -> reviewerService.saveCrew(SALLY, "BACKEND"))
             .isInstanceOf(DuplicateCrewException.class)
-            .hasMessage("이미 존재하는 크루입니다.");
+            .hasMessage("이미 등록되어 있습니다.");
     }
 
     @Test
     void addCrewException_IllegalPart() {
         assertThatThrownBy(() -> reviewerService.saveCrew(SALLY, "BACK"))
             .isInstanceOf(IllegalPartException.class)
-            .hasMessage("불가능한 파트입니다. BACKEND / FRONTEND로 입력해주세요.");
+            .hasMessage("백엔드 또는 프론트엔드만 가능합니다.");
     }
 
     @Test
@@ -114,8 +114,8 @@ class ReviewerServiceTest {
 
         reviewerService.deleteAllCrews();
 
-        assertThat(reviewerService.findCrews().getBackendCrews().size()).isZero();
-        assertThat(reviewerService.findCrews().getFrontendCrews().size()).isZero();
+        assertThat(reviewerService.findCrews().getBackendCrews()).isEmpty();
+        assertThat(reviewerService.findCrews().getFrontendCrews()).isEmpty();
     }
 
     @Test
@@ -124,6 +124,6 @@ class ReviewerServiceTest {
 
         reviewerService.deleteCrew(SALLY);
 
-        assertThat(reviewerService.findCrews().getBackendCrews().size()).isZero();
+        assertThat(reviewerService.findCrews().getBackendCrews()).isEmpty();
     }
 }
