@@ -2,38 +2,45 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
         <title>테코블 리뷰어 매칭</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+              integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <link rel="stylesheet" href="./crews.css">
     </head>
     <body>
     <div class="card">
+        <h3 class="crewsHead mx-2 my-2">
+            등록 현황
+        </h3>
+        <hr/>
         <div class="crews mx-2 my-2">
-            등록 결과 :
         </div>
         <form class="row g-3 mx-2 my-2">
             <div class="col-auto">
-                <label for="inputName" class="form-label">크루 이름</label>
+                <label for="name" class="form-label">이름</label>
             </div>
             <div class="col-auto">
-                <input class="form-control" id="inputName">
+                <input class="form-control" id="name" style="width: 188px">
             </div>
             <div class="col-auto">
-                <button id="register" class="btn btn-primary">등록하기</button>
+                <label for="part" class="form-label">파트</label>
+            </div>
+            <div class="col-auto">
+                <input class="form-control" id="part" style="width: 188px" placeholder="BACKEND / FRONTEND">
+            </div>
+            <div class="col-auto">
+                <button type="button" id="saveCrew" class="btn btn-primary">등록하기</button>
             </div>
         </form>
-        <br/>
-        <div class="mx-2 my-2">
-            매칭 결과 :
-        </div>
+        <br/><br/>
+        <h3 class="mx-2 my-2">
+            매칭 결과
+        </h3>
+        <hr/>
         <div class="reviewers mx-2 my-2">
         </div>
-        <form class="row g-3 mx-2 my-2">
-            <div class="col-auto">
-                <button id="match" class="btn btn-primary">매칭하기</button>
-            </div>
-        </form>
+        <button class="btn btn-primary" id="findReviewers">매칭하기</button>
     </div>
     </body>
-    <script src="/crews.js"></script>
+    <script src="./crews.js"></script>
 </html>

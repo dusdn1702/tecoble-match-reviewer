@@ -4,13 +4,22 @@ import java.util.List;
 
 public class ReviewersDto {
 
-    private final List<String> reviewers;
+    private List<String> backendReviewers;
+    private List<String> frontendReviewers;
 
-    public ReviewersDto(List<String> reviewers) {
-        this.reviewers = reviewers;
+    private ReviewersDto() {
     }
 
-    public List<String> getReviewers() {
-        return reviewers;
+    public ReviewersDto(List<String> backendReviewers, List<String> frontendReviewers) {
+        this.backendReviewers = backendReviewers;
+        this.frontendReviewers = frontendReviewers;
+    }
+
+    public List<String> getBackendReviewers() {
+        return backendReviewers;
+    }
+
+    public List<String> getFrontendReviewers() {
+        return frontendReviewers;
     }
 }

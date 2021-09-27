@@ -1,72 +1,75 @@
 package com.techoble.reviewer.service;
 
+import static com.techoble.reviewer.domain.Part.BACKEND;
+import static com.techoble.reviewer.domain.Part.FRONTEND;
+
+import com.techoble.reviewer.domain.Crew;
+import com.techoble.reviewer.domain.CrewRepository;
+import com.techoble.reviewer.domain.Crews;
+import com.techoble.reviewer.domain.Part;
 import com.techoble.reviewer.dto.CrewsDto;
 import com.techoble.reviewer.dto.ReviewersDto;
-import com.techoble.reviewer.exception.CannotMatchException;
 import com.techoble.reviewer.exception.DuplicateCrewException;
-import java.util.ArrayList;
-import java.util.Collections;
+import com.techoble.reviewer.exception.IllegalPartException;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class ReviewerService {
 
-    protected static List<String> crews = new ArrayList<>();
+    private final CrewRepository crewRepository;
 
-    public void add(final String name) {
+    public ReviewerService(CrewRepository crewRepository) {
+        this.crewRepository = crewRepository;
+    }
+
+    public CrewsDto findCrews() {
+        List<Crew> backendCrews = crewRepository.findAllByPart(BACKEND);
+        List<Crew> frontendCrews = crewRepository.findAllByPart(FRONTEND);
+
+        return CrewsDto.from(backendCrews, frontendCrews);
+    }
+
+    @Transactional
+    public void saveCrew(final String name, final String part) {
         validateContains(name);
-        crews.add(name);
+
+        Part findPart = valueOf(part);
+        Crew crew = new Crew(name, findPart);
+
+        crewRepository.save(crew);
     }
 
     private void validateContains(String name) {
-        if (crews.contains(name)) {
+        if (crewRepository.existsByName(name)) {
             throw new DuplicateCrewException();
         }
     }
 
-    public CrewsDto findCrews() {
-        return new CrewsDto(crews);
-    }
-
-    public void shuffle() {
-        validateSize();
-        Collections.shuffle(crews);
-    }
-
-    private void validateSize() {
-        if (crews.size() < 3) {
-            throw new CannotMatchException();
+    private Part valueOf(String part) {
+        try {
+            return Part.valueOf(part);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalPartException();
         }
     }
 
     public ReviewersDto findReviewers() {
-        return new ReviewersDto(match());
+        Crews backendCrews = new Crews(crewRepository.findAllByPart(BACKEND));
+        backendCrews.shuffle();
+
+        Crews frontendCrews = new Crews(crewRepository.findAllByPart(FRONTEND));
+        frontendCrews.shuffle();
+
+        return match(backendCrews, frontendCrews);
     }
 
-    private List<String> match() {
-        List<String> reviewers = new ArrayList<>();
+    private ReviewersDto match(Crews backendCrews, Crews frontendCrews) {
+        List<String> backendReviewers = backendCrews.match();
+        List<String> frontendReviewers = frontendCrews.match();
 
-        for (int i = 0; i < crews.size(); i++) {
-            if (isBeforeLast(i)) {
-                reviewers.add(crews.get(i) + " " + crews.get(i + 1) + " " + crews.get(0));
-                continue;
-            }
-            if (isLast(i)) {
-                reviewers.add(crews.get(i) + " " + crews.get(0) + " " + crews.get(1));
-                break;
-            }
-            reviewers.add(crews.get(i) + " " + crews.get(i + 1) + " " + crews.get(i + 2));
-        }
-
-        return reviewers;
-    }
-
-    private boolean isBeforeLast(int i) {
-        return i == crews.size() - 2;
-    }
-
-    private boolean isLast(int i) {
-        return i == crews.size() - 1;
+        return new ReviewersDto(backendReviewers, frontendReviewers);
     }
 }

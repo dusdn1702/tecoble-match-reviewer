@@ -23,30 +23,18 @@ public class ReviewerApiController {
     @GetMapping("/crews")
     public ResponseEntity<CrewsDto> findCrews() {
         CrewsDto crews = reviewerService.findCrews();
-        if (crews.getCrews().isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
         return ResponseEntity.ok(crews);
     }
 
     @PostMapping("/crews")
-    public ResponseEntity<Void> register(@RequestParam String name) {
-        reviewerService.add(name);
+    public ResponseEntity<Void> saveCrew(@RequestParam String name, @RequestParam String part) {
+        reviewerService.saveCrew(name, part);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/reviewers")
     public ResponseEntity<ReviewersDto> findReviewers() {
         ReviewersDto reviewers = reviewerService.findReviewers();
-        if (reviewers.getReviewers().size() < 3) {
-            return ResponseEntity.noContent().build();
-        }
         return ResponseEntity.ok(reviewers);
-    }
-
-    @PostMapping("/reviewers")
-    public ResponseEntity<ReviewersDto> shuffle() {
-        reviewerService.shuffle();
-        return ResponseEntity.ok().build();
     }
 }
