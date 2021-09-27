@@ -107,4 +107,23 @@ class ReviewerServiceTest {
         assertThat(actual.getBackendReviewers()).hasSize(4);
         assertThat(actual.getFrontendReviewers()).hasSize(3);
     }
+
+    @Test
+    void deleteAll() {
+        reviewerService.saveCrew(SALLY, BACKEND);
+
+        reviewerService.deleteAllCrews();
+
+        assertThat(reviewerService.findCrews().getBackendCrews().size()).isZero();
+        assertThat(reviewerService.findCrews().getFrontendCrews().size()).isZero();
+    }
+
+    @Test
+    void delete() {
+        reviewerService.saveCrew(SALLY, BACKEND);
+
+        reviewerService.deleteCrew(SALLY);
+
+        assertThat(reviewerService.findCrews().getBackendCrews().size()).isZero();
+    }
 }

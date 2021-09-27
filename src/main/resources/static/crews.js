@@ -21,14 +21,14 @@ function getCrews() {
             if (data.status === 200) {
                 data.json().then(res => {
                     crewNames.innerHTML += '🖋️ 백엔드 크루 - ';
-                    for (let i = 0; i < res.backendCrews.length; i++) {
-                        crewNames.innerHTML += res.backendCrews[i] + ' ';
-                    }
+                    crewNames.innerHTML += res.backendCrews.map(crew =>
+                        `<span onclick=deleteCrew('${crew}')>${crew}</span>`
+                    ).join(" ");
                     crewNames.innerHTML += '<br/>';
                     crewNames.innerHTML += '🖌 프론트엔드 크루 - ';
-                    for (let i = 0; i < res.frontendCrews.length; i++) {
-                        crewNames.innerHTML += res.frontendCrews[i] + ' ';
-                    }
+                    crewNames.innerHTML += res.frontendCrews.map(crew =>
+                        `<span onclick=deleteCrew('${crew}')>${crew}</span>`
+                    ).join(" ");
                 })
             } else {
                 crewNames.innerHTML += '등록 결과가 없습니다.';
@@ -37,9 +37,24 @@ function getCrews() {
     );
 }
 
+function deleteCrew(crew) {
+    fetch(crewsApi + '/' + crew, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then(function (response) {
+        if (response.status === 200) {
+            location.reload();
+        } else {
+            alert('삭제에 문제가 있습니다.');
+        }
+    });
+}
+
 document.querySelector("#saveCrew").addEventListener("click", function () {
     let name = document.querySelector("#name").value;
-    let part = document.querySelector("#part").value;
+    let part = document.querySelector(".form-select").value;
 
     fetch(crewsApi + '?name=' + name + '&part=' + part, {
         method: 'POST',
@@ -50,7 +65,7 @@ document.querySelector("#saveCrew").addEventListener("click", function () {
         if (response.status === 200) {
             location.reload();
         } else {
-            alert('이미 존재하는 크루 또는 불가능한 파트입니다.');
+            alert('등록에 문제가 있습니다.');
         }
     });
 });
@@ -62,8 +77,8 @@ document.querySelector("#findReviewers").addEventListener("click", function () {
             'Content-Type': 'application/json',
         }
     }).then(function (data) {
-        console.log(data);
             const reviewerResults = document.querySelector(".reviewers");
+            if (reviewerResults.innerHTML.length > 0) reviewerResults.innerHTML = "";
             if (data.status === 200) {
                 data.json().then(res => {
                     reviewerResults.innerHTML += '🪐 백엔드<br/><br/>';
@@ -82,4 +97,19 @@ document.querySelector("#findReviewers").addEventListener("click", function () {
             }
         }
     );
+});
+
+document.querySelector("#deleteAllCrew").addEventListener("click", function () {
+    fetch(crewsApi, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then(function (response) {
+        if (response.status === 200) {
+            location.reload();
+        } else {
+            alert('전체 삭제에 문제가 있습니다.');
+        }
+    });
 });
